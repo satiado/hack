@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resetar senha - Conecteca</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-primary": "#ffffff",
+                    "background": "#f7f9fb",
+                    "on-primary-fixed": "#00174b",
+                    "secondary-fixed": "#dce1ff",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed-dim": "#b6c4ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-primary-container": "#eeefff",
+                    "inverse-primary": "#b4c5ff",
+                    "primary": "#004ac6",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#0053db",
+                    "surface-container-low": "#f2f4f6",
+                    "outline-variant": "#c3c6d7",
+                    "secondary": "#4059aa",
+                    "surface-bright": "#f7f9fb",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-dim": "#d8dadc",
+                    "tertiary-container": "#007d55",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-tertiary-fixed": "#002113",
+                    "on-error": "#ffffff",
+                    "on-surface": "#191c1e",
+                    "on-secondary-container": "#1d3989",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-secondary-fixed": "#00164e",
+                    "primary-fixed": "#dbe1ff",
+                    "on-secondary-fixed-variant": "#264191",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#8fa7fe",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "outline": "#737686",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "inverse-surface": "#2d3133",
+                    "surface": "#f7f9fb",
+                    "tertiary": "#006242",
+                    "on-tertiary-container": "#bdffdb",
+                    "primary-container": "#2563eb",
+                    "on-surface-variant": "#434655",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "container-max": "1280px",
+                    "margin-desktop": "32px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "column-count": "12"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom red color from the image reference */
+        .bg-brand-red {
+            background-color: #cb3234;
+        }
+        .text-brand-red {
+            color: #cb3234;
+        }
+        .hover\:bg-brand-red-dark:hover {
+            background-color: #a82729;
+        }
+    </style>
+</head>
+<body class="bg-background h-full font-body-sm text-on-surface antialiased flex flex-col items-center">
+<!-- Top Brand Bar -->
+<header class="w-full bg-brand-red h-24 flex items-center px-margin-mobile md:px-margin-desktop shadow-sm">
+<div class="max-w-container-max mx-auto w-full">
+<h1 class="font-headline-lg text-headline-lg text-on-primary tracking-wide">CONECTECA</h1>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full flex items-center justify-center p-margin-mobile md:p-margin-desktop">
+<!-- Recovery Card -->
+<div class="bg-surface-container-lowest w-full max-w-md rounded-xl shadow-[0_10px_25px_rgba(0,0,0,0.1)] p-8 flex flex-col items-center border border-surface-variant transition-all duration-300">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8 text-center">Resetar senha</h2>
+<form class="w-full space-y-6 flex flex-col items-center">
+<!-- Email Input -->
+<div class="w-full max-w-xs">
+<label class="sr-only" for="email">Email</label>
+<input class="w-full h-[52px] bg-surface-container px-4 rounded-lg border border-outline-variant text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors" id="email" name="email" placeholder="Email" required="" type="email"/>
+</div>
+<!-- New Password Input -->
+<div class="w-full max-w-xs">
+<label class="sr-only" for="new_password">Nova senha</label>
+<input class="w-full h-[52px] bg-surface-container px-4 rounded-lg border border-outline-variant text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors" id="new_password" name="new_password" placeholder="Nova senha" required="" type="password"/>
+</div>
+<!-- Confirm Password Input -->
+<div class="w-full max-w-xs">
+<label class="sr-only" for="confirm_password">Confirme senha</label>
+<input class="w-full h-[52px] bg-surface-container px-4 rounded-lg border border-outline-variant text-body-md font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors" id="confirm_password" name="confirm_password" placeholder="Confirme senha" required="" type="password"/>
+</div>
+<!-- Login Link -->
+<div class="w-full max-w-xs text-center pt-2">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Já tem conta? <a class="font-bold text-on-surface hover:text-primary transition-colors" href="gmail-login.html">Clique aqui</a>
+</p>
+</div>
+<!-- Submit Button -->
+<div class="w-full max-w-xs pt-4 flex justify-center">
+<button class="bg-brand-red hover:bg-brand-red-dark text-on-primary font-headline-sm text-headline-sm rounded-lg h-14 px-8 w-[200px] flex items-center justify-center transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-red" type="submit">
+                        Resetar
+                    </button>
+</div>
+</form>
+</div>
+</main>
+<!-- Subtle atmospheric background elements (optional, to enhance SaaS feel without cluttering) -->
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+<div class="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[100px]"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[30%] h-[30%] rounded-full bg-secondary/5 blur-[80px]"></div>
+</div>
+</body></html>
