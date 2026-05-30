@@ -1,48 +1,56 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Celular - Leitor NFC</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 flex flex-col items-center justify-center min-h-screen text-center p-4">
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
 
-  <button id="btn-nfc" class="bg-red-600 text-white font-bold py-6 px-10 rounded-2xl text-2xl shadow-lg mb-8">
-    LIGAR LEITOR NFC
-  </button>
-  <p id="status" class="text-white text-lg">Aperte o botão acima.</p>
+  // 🔴 COLE AS MESMAS CREDENCIAIS DO SUPABASE AQUI 🔴
+  const supabaseUrl = 'gjigayvnwgobagwtzkrl';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqaWdheXZud2dvYmFnd3R6a3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMTE0MDksImV4cCI6MjA5NTY4NzQwOX0.AvRtYGBtnumkgCM1Svefxbihb5XyWBmHqiXQooicBKU';
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+  const statusText = document.getElementById('status-text');
+  const startNfcBtn = document.getElementById('start-nfc-btn');
 
-    // COLOQUE SUAS CHAVES DO SUPABASE AQUI (As mesmas chaves)
-    const supabase = createClient('SUA_URL_AQUI', 'SUA_CHAVE_AQUI');
-    const canal = supabase.channel('sala-conecteca');
-    canal.subscribe();
+  // Entra na mesma "sala" do notebook para poder enviar mensagens
+  const canal = supabase.channel('conecteca-room');
+  canal.subscribe();
 
-    const btn = document.getElementById('btn-nfc');
-    const status = document.getElementById('status');
+  if ("NDEFReader" in window) {
+    statusText.innerText = "Sensor compatível. Clique acima para começar.";
+    startNfcBtn.classList.remove('hidden'); 
 
-    btn.addEventListener('click', async () => {
+    startNfcBtn.addEventListener("click", async () => {
       try {
         const ndef = new NDEFReader();
         await ndef.scan();
-        status.innerText = "Pode encostar a Tag NFC!";
-        btn.style.display = 'none';
+        
+        statusText.innerText = "Sensor Ativado! Encoste o livro atrás do celular.";
+        statusText.classList.replace("text-gray-600", "text-blue-600");
+        startNfcBtn.classList.add('hidden');
 
-        ndef.addEventListener("reading", () => {
-          status.innerText = "Lido! Avisando o notebook...";
-          status.style.color = "lime";
+        ndef.addEventListener("reading", ({ message, serialNumber }) => {
+          statusText.innerText = "LIVRO LIDO! Enviando comando para o Notebook...";
+          statusText.classList.replace("text-blue-600", "text-green-600");
           
-          // Enviando o aviso para o notebook
-          canal.send({ type: 'broadcast', event: 'liberar', payload: { ok: true } });
+          // 🚀 ENVIA O SINAL VIA SUPABASE BROADCAST
+          canal.send({
+            type: 'broadcast',
+            event: 'liberar_acesso',
+            payload: { liberado: true }
+          });
+
+          // Reseta a tela do celular após 3 segundos
+          setTimeout(() => {
+            statusText.innerText = "Pronto para o próximo livro. Encoste a tag.";
+            statusText.classList.replace("text-green-600", "text-blue-600");
+          }, 3000);
+
         });
       } catch (error) {
-        status.innerText = "Erro. Navegador não suporta NFC.";
-        status.style.color = "red";
+        statusText.innerText = "Erro ao ativar o NFC.";
+        statusText.classList.replace("text-gray-600", "text-red-600");
       }
     });
-  </script>
-</body>
-</html>
+  } else {
+    statusText.innerText = "Este navegador não suporta leitura NFC.";
+    statusText.classList.replace("text-gray-600", "text-red-600");
+  }
+</script>
