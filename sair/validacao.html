@@ -1,202 +1,102 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Conecteca - Escanear Livros</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-<style>
-  .material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-  }
-  @keyframes scan-line {
-    0% { transform: translateY(-300%); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(300%); opacity: 0; }
-  }
-  .animate-scan-line { animation: scan-line 3s linear infinite; }
-  @keyframes fade-in-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
-</style>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "tertiary-fixed-dim": "#4edea3",
-          "on-tertiary-container": "#bdffdb",
-          "primary-fixed-dim": "#b4c5ff",
-          "on-tertiary-fixed": "#002113",
-          "tertiary-container": "#007d55",
-          "surface-variant": "#e0e3e5",
-          "secondary": "#4059aa",
-          "on-secondary": "#ffffff",
-          "inverse-surface": "#2d3133",
-          "surface-bright": "#f7f9fb",
-          "primary": "#004ac6",
-          "on-error-container": "#93000a",
-          "inverse-on-surface": "#eff1f3",
-          "on-tertiary": "#ffffff",
-          "on-background": "#191c1e",
-          "error": "#ba1a1a",
-          "surface": "#f7f9fb",
-          "secondary-container": "#8fa7fe",
-          "primary-container": "#2563eb",
-          "on-tertiary-fixed-variant": "#005236",
-          "on-error": "#ffffff",
-          "outline": "#737686",
-          "secondary-fixed-dim": "#b6c4ff",
-          "on-secondary-fixed": "#00164e",
-          "on-primary": "#ffffff",
-          "on-primary-fixed-variant": "#003ea8",
-          "surface-container-low": "#f2f4f6",
-          "surface-container": "#eceef0",
-          "surface-container-high": "#e6e8ea",
-          "inverse-primary": "#b4c5ff",
-          "on-surface-variant": "#434655",
-          "on-secondary-fixed-variant": "#264191",
-          "surface-container-lowest": "#ffffff",
-          "secondary-fixed": "#dce1ff",
-          "on-secondary-container": "#1d3989",
-          "on-primary-fixed": "#00174b",
-          "surface-container-highest": "#e0e3e5",
-          "tertiary-fixed": "#6ffbbe",
-          "on-surface": "#191c1e",
-          "tertiary": "#006242",
-          "surface-dim": "#d8dadc",
-          "primary-fixed": "#dbe1ff",
-          "surface-tint": "#0053db",
-          "error-container": "#ffdad6",
-          "outline-variant": "#c3c6d7",
-          "on-primary-container": "#eeefff",
-          "background": "#ffffff",
-          "brand-red": "#cc292b"
-        },
-        borderRadius: {
-          "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"
-        },
-        spacing: {
-          "margin-mobile": "16px", "margin-desktop": "32px",
-          "container-max": "1280px", "base": "8px",
-          "column-count": "12", "gutter": "24px"
-        },
-        fontFamily: {
-          "headline-lg": ["Inter"], "body-sm": ["Inter"],
-          "headline-md": ["Inter"], "body-md": ["Inter"],
-          "body-lg": ["Inter"], "headline-xl": ["Inter"],
-          "headline-sm": ["Inter"], "headline-lg-mobile": ["Inter"],
-          "label-md": ["Inter"]
-        },
-        fontSize: {
-          "headline-lg": ["30px", { lineHeight: "38px", letterSpacing: "-0.01em", fontWeight: "700" }],
-          "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
-          "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
-          "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
-          "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-          "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
-          "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
-          "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
-          "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Conecteca - Scan Book</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px;
+            line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block;
+            white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-feature-settings: 'liga'; -webkit-font-smoothing: antialiased;
         }
-      }
-    }
-  }
-</script>
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { "primary-fixed-dim": "#b4c5ff", "on-background": "#191c1e", "surface-dim": "#d8dadc", "brand-red": "#cc292b", "brand-green": "#4edea3" },
+                    fontFamily: { "headline-xl": ["Inter"], "headline-sm": ["Inter"] },
+                    fontSize: { "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }] }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-background min-h-screen flex flex-col font-body-md text-on-surface">
+<body class="bg-white min-h-screen flex flex-col text-on-background">
 
-  <!-- Header -->
-  <header class="bg-brand-red w-full h-16 flex items-center px-margin-desktop fixed top-0 left-0 z-50 gap-3">
-    <button onclick="window.location.href='permitido.html'"
-      class="text-white bg-transparent border-none cursor-pointer flex items-center">
-      <span class="material-symbols-outlined">arrow_back</span>
-    </button>
-    <h1 class="font-headline-sm text-headline-sm text-white uppercase tracking-wider">CONECTECA</h1>
-  </header>
+    <header class="bg-brand-red w-full h-16 flex items-center px-8 fixed top-0 left-0 z-50">
+        <h1 class="font-headline-sm text-headline-sm text-white uppercase tracking-wider">CONECTECA</h1>
+    </header>
 
-  <!-- Main -->
-  <main class="flex-grow flex flex-col items-center justify-center pt-16 px-margin-mobile md:px-margin-desktop">
-    <div class="flex flex-col items-center max-w-lg text-center space-y-8 animate-fade-in-up">
+    <main class="flex-grow flex flex-col items-center justify-center pt-16 px-4">
+        <div class="flex flex-col items-center max-w-lg text-center space-y-8 animate-fade-in-up">
+            <h2 id="status-texto" class="font-headline-xl text-headline-xl uppercase text-on-background leading-tight transition-all duration-300">
+                APROXIME O<br>LIVRO ABAIXO<br>PARA A LEITURA
+            </h2>
+            <div id="seta-animada" class="animate-bounce mt-4">
+                <span class="material-symbols-outlined text-[48px] text-on-background">arrow_downward</span>
+            </div>
+            
+            <div class="mt-8 relative flex justify-center items-center h-64 w-64">
+                <span id="icone-livro" class="material-symbols-outlined text-[180px] text-surface-dim transition-all duration-300" style="font-variation-settings: 'FILL' 1;">book</span>
+                <div id="linha-scan" class="absolute inset-0 bg-gradient-to-b from-transparent via-primary-fixed-dim/30 to-transparent animate-scan-line h-4 w-full rounded-full blur-sm top-1/2 -translate-y-1/2"></div>
+            </div>
+        </div>
+    </main>
 
-      <h2 class="font-headline-xl text-headline-xl uppercase text-on-background leading-tight">
-        APROXIME O<br>
-        LIVRO ABAIXO<br>
-        PARA A LEITURA
-      </h2>
+    <style>
+        @keyframes scan-line { 0% { transform: translateY(-300%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(300%); opacity: 0; } }
+        .animate-scan-line { animation: scan-line 3s linear infinite; }
+        @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
+    </style>
 
-      <div class="animate-bounce mt-4">
-        <span class="material-symbols-outlined text-[48px] text-on-background">arrow_downward</span>
-      </div>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
 
-      <!-- Book Icon -->
-      <div class="mt-8 relative flex justify-center items-center h-64 w-64">
-        <span class="material-symbols-outlined text-[180px] text-surface-dim" style="font-variation-settings: 'FILL' 1;">book</span>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary-fixed-dim/30 to-transparent animate-scan-line h-4 w-full rounded-full blur-sm top-1/2 -translate-y-1/2"></div>
-      </div>
+        const supabase = createClient('https://gjigayvnwgobagwtzkrl.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqaWdheXZud2dvYmFnd3R6a3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMTE0MDksImV4cCI6MjA5NTY4NzQwOX0.AvRtYGBtnumkgCM1Svefxbihb5XyWBmHqiXQooicBKU');
+        const canal = supabase.channel('sala-conecteca');
 
-      <!-- Status da conexão -->
-      <div id="status-box" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-body-sm font-medium">
-        <span id="status-dot" class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse inline-block"></span>
-        <span id="status-text">Conectando ao servidor...</span>
-      </div>
+        const statusTexto = document.getElementById('status-texto');
+        const seta = document.getElementById('seta-animada');
+        const iconeLivro = document.getElementById('icone-livro');
+        const linhaScan = document.getElementById('linha-scan');
 
-    </div>
-  </main>
+        canal.on('broadcast', { event: 'liberar' }, (mensagem) => {
+            const dados = message.payload || mensagem.payload; // Garante a captura do objeto independente do padrão
+            
+            if (dados.cadastrado) {
+                // 📖 Cenário 1: O livro existe no banco! Mostra o título dele
+                statusTexto.innerHTML = `LIVRO DETECTADO!<br><span class="text-brand-green font-bold text-2xlblock mt-2">"${dados.titulo}"</span>`;
+                statusTexto.style.color = "#004ac6";
+                iconeLivro.style.color = "#4edea3";
+                if(seta) seta.style.display = 'none';
+                if(linhaScan) linhaScan.style.display = 'none';
 
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
-
-    const supabase = createClient(
-      'https://gjigayvnwgobagwtzkrl.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqaWdheXZud2dvYmFnd3R6a3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMTE0MDksImV4cCI6MjA5NTY4NzQwOX0.AvRtYGBtnumkgCM1Svefxbihb5XyWBmHqiXQooicBKU'
-    );
-
-    const statusDot  = document.getElementById('status-dot');
-    const statusText = document.getElementById('status-text');
-
-    function setStatus(tipo, mensagem) {
-      const cores = {
-        aguardando: 'bg-yellow-400',
-        conectado:  'bg-green-400',
-        erro:       'bg-red-500'
-      };
-      statusDot.className = `w-2 h-2 rounded-full inline-block animate-pulse ${cores[tipo]}`;
-      statusText.innerText = mensagem;
-    }
-
-    const canal = supabase.channel('sala-conecteca');
-
-    canal
-      .on('broadcast', { event: 'liberar' }, () => {
-        setStatus('conectado', '✅ Livro identificado! Redirecionando...');
-        setTimeout(() => { window.location.href = 'validacao.html'; }, 1500);
-      })
-      .subscribe((status) => {
-        if (status === 'SUBSCRIBED') {
-          setStatus('conectado', 'Aguardando confirmação do celular...');
-        } else if (status === 'CLOSED' || status === 'CHANNEL_ERROR') {
-          setStatus('erro', 'Erro na conexão. Recarregue a página.');
-        }
-      });
-  </script>
-
+                // Redireciona para a página permitida após 2.5 segundos
+                setTimeout(() => {
+                    window.location.href = 'permitido.html';
+                }, 2500);
+            } else {
+                // ⚠️ Cenário 2: Tag lida, mas não está cadastrada na tabela 'livros'
+                statusTexto.innerHTML = `LIVRO NÃO CADASTRADO!<br><span class="text-gray-500 font-normal text-sm block mt-2">NFC: ${dados.tag_id}</span>`;
+                statusTexto.style.color = "#cc292b";
+                iconeLivro.style.color = "#cc292b";
+                
+                // Reseta a tela do notebook de volta para o padrão após 4 segundos
+                setTimeout(() => {
+                    statusTexto.innerHTML = "APROXIME O<br>LIVRO ABAIXO<br>PARA A LEITURA";
+                    statusTexto.style.color = "#191c1e";
+                    iconeLivro.style.color = "#d8dadc";
+                    if(seta) seta.style.display = 'block';
+                    if(linhaScan) linhaScan.style.display = 'block';
+                }, 4000);
+            }
+        }).subscribe();
+    </script>
 </body>
 </html>

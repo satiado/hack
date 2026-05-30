@@ -1,56 +1,118 @@
-<script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conecteca - Leitor Celular</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { 'brand-red': '#cc292b', 'brand-green': '#4edea3' } } } }
+    </script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col font-sans">
 
-  // 🔴 COLE AS MESMAS CREDENCIAIS DO SUPABASE AQUI 🔴
-  const supabaseUrl = 'gjigayvnwgobagwtzkrl';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqaWdheXZud2dvYmFnd3R6a3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMTE0MDksImV4cCI6MjA5NTY4NzQwOX0.AvRtYGBtnumkgCM1Svefxbihb5XyWBmHqiXQooicBKU';
-  const supabase = createClient(supabaseUrl, supabaseKey);
+    <header class="bg-brand-red w-full h-16 flex items-center justify-center fixed top-0 left-0 z-50">
+        <h1 class="text-xl font-bold tracking-wider uppercase">CONECTECA - BALCÃO</h1>
+    </header>
 
-  const statusText = document.getElementById('status-text');
-  const startNfcBtn = document.getElementById('start-nfc-btn');
+    <main class="flex-grow flex flex-col items-center justify-center pt-16 p-6 text-center">
+        <div class="max-w-sm w-full bg-gray-800 rounded-3xl p-8 shadow-2xl border border-gray-700 space-y-6">
+            <div class="flex justify-center">
+                <div id="icone-status" class="h-24 w-24 rounded-full bg-red-500/10 flex items-center justify-center text-brand-red animate-pulse">
+                    <span class="material-symbols-outlined text-5xl">nfc</span>
+                </div>
+            </div>
+            <h2 id="titulo-status" class="text-2xl font-bold transition-all duration-300">Leitor Desconectado</h2>
+            <p id="mensagem-status" class="text-gray-400 text-sm leading-relaxed">Ative a antena NFC do aparelho clicando no botão abaixo.</p>
+            <button id="btn-nfc" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-4 px-6 rounded-2xl text-lg transition-all transform active:scale-95 shadow-lg">
+                LIGAR ANTENA NFC
+            </button>
+        </div>
+    </main>
 
-  // Entra na mesma "sala" do notebook para poder enviar mensagens
-  const canal = supabase.channel('conecteca-room');
-  canal.subscribe();
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
 
-  if ("NDEFReader" in window) {
-    statusText.innerText = "Sensor compatível. Clique acima para começar.";
-    startNfcBtn.classList.remove('hidden'); 
+        const supabase = createClient('https://gjigayvnwgobagwtzkrl.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqaWdheXZud2dvYmFnd3R6a3JsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMTE0MDksImV4cCI6MjA5NTY4NzQwOX0.AvRtYGBtnumkgCM1Svefxbihb5XyWBmHqiXQooicBKU');
+        const canal = supabase.channel('sala-conecteca').subscribe();
 
-    startNfcBtn.addEventListener("click", async () => {
-      try {
-        const ndef = new NDEFReader();
-        await ndef.scan();
-        
-        statusText.innerText = "Sensor Ativado! Encoste o livro atrás do celular.";
-        statusText.classList.replace("text-gray-600", "text-blue-600");
-        startNfcBtn.classList.add('hidden');
+        const btn = document.getElementById('btn-nfc');
+        const tituloStatus = document.getElementById('titulo-status');
+        const mensagemStatus = document.getElementById('mensagem-status');
+        const iconeStatus = document.getElementById('icone-status');
 
-        ndef.addEventListener("reading", ({ message, serialNumber }) => {
-          statusText.innerText = "LIVRO LIDO! Enviando comando para o Notebook...";
-          statusText.classList.replace("text-blue-600", "text-green-600");
-          
-          // 🚀 ENVIA O SINAL VIA SUPABASE BROADCAST
-          canal.send({
-            type: 'broadcast',
-            event: 'liberar_acesso',
-            payload: { liberado: true }
-          });
+        btn.addEventListener('click', async () => {
+            try {
+                const ndef = new NDEFReader();
+                await ndef.scan();
 
-          // Reseta a tela do celular após 3 segundos
-          setTimeout(() => {
-            statusText.innerText = "Pronto para o próximo livro. Encoste a tag.";
-            statusText.classList.replace("text-green-600", "text-blue-600");
-          }, 3000);
+                tituloStatus.innerText = "Aguardando Livro...";
+                btn.style.display = 'none';
+                iconeStatus.className = "h-24 w-24 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 animate-bounce";
+                iconeStatus.innerHTML = '<span class="material-symbols-outlined text-5xl">sensors</span>';
+                mensagemStatus.innerText = "Aproxime a tag NFC do livro na traseira do celular.";
 
+                ndef.addEventListener("reading", async ({ serialNumber }) => {
+                    tituloStatus.innerText = "Processando...";
+                    tituloStatus.style.color = "#ffffff";
+                    mensagemStatus.innerText = "Consultando acervo Conecteca...";
+
+                    // 🔍 BUSCA O LIVRO NO SEU BANCO REAL DE ACORDO COM O NFC LIDO
+                    const { data: livro, error } = await supabase
+                        .from('livros')
+                        .select('titulo, autor')
+                        .eq('codigo_nfc', serialNumber)
+                        .maybeSingle();
+
+                    if (livro) {
+                        // ✅ Encontrou o livro no seu banco de dados!
+                        tituloStatus.innerText = "Livro Reconhecido!";
+                        tituloStatus.style.color = "#4edea3";
+                        mensagemStatus.innerText = `"${livro.titulo}"\nSinalizando notebook...`;
+                        iconeStatus.className = "h-24 w-24 rounded-full bg-green-500/10 flex items-center justify-center text-brand-green";
+                        iconeStatus.innerHTML = '<span class="material-symbols-outlined text-5xl">check_circle</span>';
+
+                        // Comunica o notebook enviando os dados REAIS do livro
+                        canal.send({
+                            type: 'broadcast',
+                            event: 'liberar',
+                            payload: { cadastrado: true, titulo: livro.titulo, autor: livro.autor }
+                        });
+                    } else {
+                        // ❌ A tag funcionou, mas esse código de NFC não está cadastrado em nenhum livro da tabela
+                        tituloStatus.innerText = "Não Cadastrado";
+                        tituloStatus.style.color = "#cc292b";
+                        mensagemStatus.innerText = `Tag ID: ${serialNumber}\nEste código não está vinculado a nenhum livro no banco.`;
+                        iconeStatus.className = "h-24 w-24 rounded-full bg-red-500/10 flex items-center justify-center text-brand-red";
+                        iconeStatus.innerHTML = '<span class="material-symbols-outlined text-5xl">warning</span>';
+
+                        // Avisa o notebook que tentaram passar um livro desconhecido
+                        canal.send({
+                            type: 'broadcast',
+                            event: 'liberar',
+                            payload: { cadastrado: false, tag_id: serialNumber }
+                        });
+                    }
+
+                    // Reseta o leitor após 4 segundos para a próxima leitura
+                    setTimeout(() => {
+                        tituloStatus.innerText = "Aguardando Livro...";
+                        tituloStatus.style.color = "#ffffff";
+                        mensagemStatus.innerText = "Aproxime o próximo livro para validar.";
+                        iconeStatus.className = "h-24 w-24 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 animate-bounce";
+                        iconeStatus.innerHTML = '<span class="material-symbols-outlined text-5xl">sensors</span>';
+                    }, 4000);
+                });
+
+            } catch (error) {
+                tituloStatus.innerText = "NFC Indisponível";
+                mensagemStatus.innerText = "Use o Google Chrome no Android e verifique se o NFC está ligado.";
+                iconeStatus.className = "h-24 w-24 rounded-full bg-red-500/10 flex items-center justify-center text-red-500";
+                iconeStatus.innerHTML = '<span class="material-symbols-outlined text-5xl">error</span>';
+            }
         });
-      } catch (error) {
-        statusText.innerText = "Erro ao ativar o NFC.";
-        statusText.classList.replace("text-gray-600", "text-red-600");
-      }
-    });
-  } else {
-    statusText.innerText = "Este navegador não suporta leitura NFC.";
-    statusText.classList.replace("text-gray-600", "text-red-600");
-  }
-</script>
+    </script>
+</body>
+</html>
